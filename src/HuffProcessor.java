@@ -135,6 +135,7 @@ public class HuffProcessor {
 
 	private void codingHelper(HuffNode root, String path, String[] encodings) {
 		// TODO Auto-generated method stub
+		 if(root == null) return;
 		 if (root.myLeft == null && root.myRight == null) {
 		        encodings[root.myValue] = path;
 		        return;
@@ -163,7 +164,6 @@ public class HuffProcessor {
 	}
 
 	private int[] readForCounts(BitInputStream in) {
-		// TODO Auto-generated method stub
 		int[] freq = new int[ALPH_SIZE + 1];
 		freq[PSEUDO_EOF] = 1;
 		while(true) {
