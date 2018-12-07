@@ -38,12 +38,10 @@ public class HuffProcessor {
 			throw new HuffException("invalid bit");
 
 		if (indicatorBit == 0) {
-			System.out.println("found a root");
 			HuffNode left = readTreeHeader(in);
 			HuffNode right = readTreeHeader(in);
 			return new HuffNode(0, 0, left, right);
 		} else {
-			System.out.println("found a leaf");
 			int value = in.readBits(BITS_PER_WORD + 1);
 			return new HuffNode(value, 0, null, null);
 		}
@@ -58,19 +56,17 @@ public class HuffProcessor {
 			if (bits == -1) {
 				throw new HuffException("bad input, no PSEUDO_EOF");
 			} else {
-				System.out.println("bits are " + bits);
 				if (bits == 0)
 					current = current.myLeft;
 				else
 					current = current.myRight;
 				
-				if (current.myValue != 0) { // if current is a leaf node
+				if (current.myRight == null) {
 					if (current.myValue == PSEUDO_EOF) {
-						break; // out of loop
+						break;
 					} else {
-						// write bits for current.value;
 						out.writeBits(BITS_PER_WORD, current.myValue);
-						current = root; // start back after leaf
+						current = root;
 					}
 				}
 			}
